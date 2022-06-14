@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.backend.mapper.UserMapper">
+ 
+    <resultMap id="BaseResultMap" type="com.backend.entity.Login">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="pwd" jdbcType="VARCHAR" property="pwd" />
+        
+    </resultMap>
+
+    <resultMap id="BasePlanitemMap" type="com.backend.entity.Planitem">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="plan" jdbcType="VARCHAR" property="plan" />
+        <result column="res" jdbcType="VARCHAR" property="res" />
+        <result column="exeTime" jdbcType="VARCHAR" property="exeTime" />
+        <result column="creaTime" jdbcType="VARCHAR" property="creaTime" />
+        <result column="updateTime" jdbcType="VARCHAR" property="updateTime" />
+        <result column="customerId" jdbcType="INTEGER" property="customerId" />
+        
+    </resultMap>
+
+    <resultMap id="BaseInfoMap" type="com.backend.entity.Baseinfo">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="username" jdbcType="VARCHAR" property="username" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="realName" jdbcType="VARCHAR" property="realName" />
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+    </resultMap>
+
+    <resultMap id="BaseYinxiaoMap" type="com.backend.entity.Salechance">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="customerName" jdbcType="VARCHAR" property="customerName" />
+        <result column="chancesource" jdbcType="VARCHAR" property="chancesource" />
+        <result column="successRate" jdbcType="VARCHAR" property="successRate" />
+        <result column="conclusion" jdbcType="VARCHAR" property="conclusion"/>
+
+        <result column="contact" jdbcType="VARCHAR" property="contact"/>
+        <result column="contactPhone" jdbcType="VARCHAR" property="contactPhone"/>
+
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="creator" jdbcType="VARCHAR" property="creator"/>
+        <result column="createTime" jdbcType="VARCHAR" property="createTime"/>
+        <result column="allocator" jdbcType="VARCHAR" property="allocator"/>
+        <result column="allocateTime" jdbcType="VARCHAR" property="allocateTime"/>
+        <result column="status" jdbcType="VARCHAR" property="status"/>
+    </resultMap>
+    
+    <resultMap id="BaseCustomerMap" type="com.backend.entity.Customerinfo">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="customerName" jdbcType="VARCHAR" property="customerName" />
+        <result column="customerSource" jdbcType="VARCHAR" property="customerSource" />
+        <result column="customerJob" jdbcType="VARCHAR" property="customerJob" />
+        <result column="customerLevel" jdbcType="VARCHAR" property="customerLevel"/>
+
+        <result column="area" jdbcType="VARCHAR" property="area"/>
+        <result column="address" jdbcType="VARCHAR" property="address"/>
+
+        <result column="contactPhone" jdbcType="VARCHAR" property="contactPhone"/>
+        <result column="email" jdbcType="VARCHAR" property="email"/>
+        <result column="saleStatus" jdbcType="VARCHAR" property="saleStatus"/>
+        <result column="tag" jdbcType="VARCHAR" property="tag"/>
+        <result column="manager" jdbcType="VARCHAR" property="manager"/>
+        <result column="nextContact" jdbcType="VARCHAR" property="nextContact"/>
+    </resultMap>
+
+    <resultMap id="BaseUsersMap" type="com.backend.entity.Users">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="userName" jdbcType="VARCHAR" property="userName" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="realName" jdbcType="VARCHAR" property="realName"/>
+
+        <result column="department" jdbcType="VARCHAR" property="department"/>
+        <result column="job" jdbcType="VARCHAR" property="job"/>
+
+        <result column="role" jdbcType="VARCHAR" property="role"/>
+        <result column="updateTime" jdbcType="VARCHAR" property="updateTime"/>
+        <result column="sex" jdbcType="VARCHAR" property="sex"/>
+        <result column="pwd" jdbcType="VARCHAR" property="pwd"/>
+        
+    </resultMap>
+
+    <select id="Sel" resultType="com.backend.entity.Login">
+        select * from login where id = 1; 
+    </select>
+    <select id="Findall" resultType="com.backend.entity.Users">
+        select * from userinfo; 
+    </select>
+    <select id="GetLoginUser" resultType="com.backend.entity.Users">
+        select * from userinfo where userName = #{username};
+    </select>
+    <select id="GetUserBaseInfo" resultType="com.backend.entity.Users">
+        select * from userinfo where username = #{username};
+    </select>
+    <select id="SetNewPwd" resultType="com.backend.entity.Users">
+        update userinfo set pwd=#{pwd} where userName=#{username};
+    </select>
+    <select id="SetBaseInfo" resultType="com.backend.entity.Users">
+        update userinfo set phone=#{phone}, email=#{email}, realName=#{realName} where username=#{username}; 
+    </select>
+
+    <select id="GetYinXiao" resultType="com.backend.entity.Salechance">
+        select * from salechance where customerName=#{customer} and creator=#{creater} and status=#{allocate};
+    </select>
+
+    <select id="GetYinXiao1" resultType="com.backend.entity.Salechance">
+        select * from salechance where customerName=#{customer} and status=#{allocate};
+    </select>
+
+    <select id="GetYinXiao2" resultType="com.backend.entity.Salechance">
+        select * from salechance where creator=#{creater} and status=#{allocate};
+    </select>
+    
+    <select id="GetYinXiao3" resultType="com.backend.entity.Salechance">
+        select * from salechance where status=#{allocate};
+    </select>
+
+
+    <select id="SetYinXiao" parameterType="java.util.Map">
+        update salechance set chancesource=#{chancesource}, customerName=#{customerName}, successRate=#{successRate}, conclusion=#{conclusion}, contact=#{contact}, contactPhone=#{contactPhone}, description=#{description},
+        creator=#{creator}, createTime=#{createTime}, allocator=#{allocator}, allocateTime=#{allocateTime}, status=#{status} where id=#{id};
+    </select>
+    <select id="SetYinXiao2" parameterType="java.util.Map">
+        update salechance set chancesource=#{chancesource}, customerName=#{customerName}, successRate=#{successRate}, conclusion=#{conclusion}, contact=#{contact}, contactPhone=#{contactPhone}, description=#{description},
+        creator=#{creator}, createTime=#{createTime}, allocator=#{allocator}, allocateTime=#{allocateTime}, status=#{status} where id=#{id};
+    </select>
+
+    <select id="AddYinXiao" parameterType="java.util.Map">
+        insert into salechance values(0, #{customerName}, #{chancesource}, #{successRate}, #{conclusion}, #{contact}, #{contactPhone}, 
+        #{description}, #{creator}, #{createTime}, #{allocator}, #{allocateTime}, #{status}, #{exploitStatus});
+    </select>
+
+    <select id="DeleteYinXiao" resultType="com.backend.entity.Salechance">
+        delete from salechance where id = #{id};
+    </select>
+
+    <select id="Getkhkf" resultType="com.backend.entity.Salechance">
+        select * from salechance where customerName = #{customer} and creator = #{creator} and exploitStatus = #{exploit} and allocator=#{username};
+    </select>
+
+    <select id="Getkhkf1" resultType="com.backend.entity.Salechance">
+        select * from salechance where customerName = #{customer} and exploitStatus = #{exploit} and allocator=#{username};
+    </select>
+
+    <select id="Getkhkf2" resultType="com.backend.entity.Salechance">
+        select * from salechance where creator = #{creator} and exploitStatus = #{exploit} and allocator=#{username};
+    </select>
+
+    <select id="Getkhkf3" resultType="com.backend.entity.Salechance">
+        select * from salechance where exploitStatus = #{exploit} and allocator=#{username};
+    </select>
+
+
+
+    <select id="AddPlan" resultType="com.backend.entity.Planitem">
+        insert into planItem values(0, #{plan}, #{res}, "0000-00-00", #{creaTime}, "0000-00-00", #{customerId});
+    </select>
+
+    <select id="Getitems" resultType="com.backend.entity.Planitem">
+        select * from planItem where customerId = #{id};
+    </select>
+    
+    <select id="Deleteplan" resultType="com.backend.entity.Planitem">
+        delete from planItem where id = #{id};
+    </select>
+
+    <select id="Setplan" resultType="com.backend.entity.Planitem">
+        update planItem set plan=#{plan}, res=#{res}, updateTime=#{updateTime}, exeTime=#{exeTime} where id=#{id};
+    </select>
+
+    <select id="GetAllYinXiao" resultType="com.backend.entity.Salechance">
+        select * from salechance;
+    </select>
+
+    <select id="GetSelectedYinXiao" resultType="com.backend.entity.Salechance">
+        select * from salechance where allocator=#{allocator};
+    </select>
+
+    <select id="SetExploitStatus" resultType="com.backend.entity.Salechance">
+        update salechance set exploitStatus=#{exploitStatus} where id=#{id};
+    </select>
+    <select id="AddKeHu" resultType="com.backend.entity.Customerinfo">
+        insert into customerInfo values(0, #{customerName}, #{customerSource}, #{customerJob}, #{customerLevel}, #{area}, #{address}, #{contactPhone}, #{email}, #{saleStatus}, #{tag}, #{manager}, #{nextContact}, #{creator});
+    </select>
+    <select id="AddNewKehu" resultType="com.backend.entity.Customerinfo">
+        insert into customerInfo values(0, #{customerName}, #{chancesource}, "", "", "", "", #{contactPhone}, "", "", #{description}, "", "", #{creator});
+    </select>
+
+
+    <select id="GetAllCustomers" resultType="com.backend.entity.Customerinfo">
+        select * from customerInfo;
+    </select>
+
+
+
+
+    <select id="GetSelectedCustomer" resultType="com.backend.entity.Customerinfo">
+        select * from customerInfo where creator=#{creator} and customerName=#{customer} and saleStatus=#{searchStatus};
+    </select>
+
+    <select id="GetSelectedCustomer1" resultType="com.backend.entity.Customerinfo">
+        select * from customerInfo where customerName=#{customer} and saleStatus=#{searchStatus};
+    </select>
+
+    <select id="GetSelectedCustomer2" resultType="com.backend.entity.Customerinfo">
+        select * from customerInfo where creator=#{creator} and saleStatus=#{searchStatus};
+    </select>
+    <select id="GetSelectedCustomer3" resultType="com.backend.entity.Customerinfo">
+        select * from customerInfo where saleStatus=#{searchStatus};
+    </select>
+
+
+
+
+
+    <select id="DeleteCustomer" resultType="com.backend.entity.Customerinfo">
+        delete from customerInfo where id=#{id};
+    </select>
+
+    <select id="SetCustomer" resultType="com.backend.entity.Customerinfo">
+        update customerinfo set customerName=#{customerName}, customerSource=#{customerSource}, customerJob=#{customerJob}, customerLevel=#{customerLevel}, area=#{area}, address=#{address}, contactPhone=#{contactPhone}, email=#{email}, saleStatus=#{saleStatus}, tag=#{tag}, manager=#{manager}, nextContact=#{nextContact}  where id=#{id}; 
+    </select>
+
+    <select id="AddnewContact" resultType="com.backend.entity.Contactinfo">
+        insert into contactInfo values(0, #{name}, #{level}, #{customerName}, #{phone}, #{tele}, #{email}, #{sex}, #{createTime}, #{creator}, #{customerId});
+    </select>
+
+    <select id="GetAllContacts" resultType="com.backend.entity.Contactinfo">
+        select * from contactInfo where customerId=#{id};
+    </select>
+
+    <select id="DeleteContact" resultType="com.backend.entity.Contactinfo">
+        delete from contactInfo where id=#{id};
+    </select>
+
+    <select id="SetContact" resultType="com.backend.entity.Contactinfo">
+        update contactInfo set name=#{name}, level=#{level}, customerName=#{customerName}, phone=#{phone}, tele=#{tele}, email=#{email}, sex=#{sex} where id=#{id};
+    </select>
+
+    <select id="GetAllorder" resultType="com.backend.entity.Orders">
+        select * from orders where customerName=#{customerId};
+    </select>
+
+    <select id="AddAorder" resultType="com.backend.entity.Orders">
+        insert into orders values(0, #{orderName}, #{customerName}, #{orderValue}, #{planTime}, #{tag}, #{recentTime}, #{nextTime}, #{orderStage}, #{allocator}, #{department}, #{updateTime}, #{creator}, #{createTime}, #{customerId}); 
+    </select>
+
+    <select id="DeleteAorder" resultType="com.backend.entity.Orders">
+        delete from orders where id=#{id};
+    </select>
+
+    <select id="DeleteAuser" resultType="com.backend.entity.Users">
+        delete from userInfo where id=#{id};
+    </select>
+
+    <select id="SetOrderItem" resultType="com.backend.entity.Orders">
+        update orders set orderName=#{orderName}, customerName=#{customerName}, orderValue=#{orderValue}, planTime=#{planTime}, tag=#{tag}, recentTime=#{recentTime}, nextTime=#{nextTime}, orderStage=#{orderStage}, allocator=#{allocator}, department=#{department}, updateTime=#{updateTime} where id=#{id};
+    </select>
+
+    <select id="GetAllorders" resultType="com.backend.entity.Orders">
+        select * from orders;
+    </select>
+
+    <select id="GetSelectedOrders" resultType="com.backend.entity.Orders">
+        select * from orders where customerName=#{customer} and creator=#{creator} and orderStage=#{searchStatus};
+    </select>
+    <select id="GetSelectedOrders1" resultType="com.backend.entity.Orders">
+        select * from orders where customerName=#{customer} and orderStage=#{searchStatus};
+    </select>
+    <select id="GetSelectedOrders2" resultType="com.backend.entity.Orders">
+        select * from orders where creator=#{creator} and orderStage=#{searchStatus};
+    </select>
+    <select id="GetSelectedOrders3" resultType="com.backend.entity.Orders">
+        select * from orders where orderStage=#{searchStatus};
+    </select>
+
+
+
+
+
+
+
+    <select id="GetAllContactinfos" resultType="com.backend.entity.Contactinfo">
+        select * from contactInfo;
+    </select>
+
+    <select id="GetAllusers" resultType="com.backend.entity.Users">
+        select * from userInfo;
+    </select>
+
+    <select id="GetSelectedUser" resultType="com.backend.entity.Users">
+        select * from userInfo where userName=#{user} and department=#{depart};
+    </select>
+    <select id="GetSelectedUser1" resultType="com.backend.entity.Users">
+        select * from userInfo where department=#{depart};
+    </select>
+
+
+
+    <select id="AddAuser" resultType="com.backend.entity.Users">
+        insert into userInfo values(#{userName}, #{phone}, #{email}, #{realName}, #{department}, #{job}, #{role}, #{updateTime}, #{sex}, #{pwd}, 0);
+    </select>
+
+    <select id="SetYongHu" resultType="com.backend.entity.Users">
+        update userInfo set userName=#{userName}, phone=#{phone}, email=#{email}, realName=#{realName}, department=#{department}, job=#{job}, role=#{role}, updateTime=#{updateTime}, sex=#{sex} where id=#{id};
+    </select>
+
+    <select id="GetSelectedPermission" resultType="com.backend.entity.Permission">
+        select * from permission where role=#{role};
+    </select>
+
+    <select id="SetPermission" resultType="com.backend.entity.Permission">
+        update permission set yinxiao=#{yinxiao}, yinxiao11=#{yinxiao11}, yinxiao12=#{yinxiao12}, yinxiao21=#{yinxiao21}, yinxiao22=#{yinxiao22}, shuju=#{shuju}, kehu=#{kehu}, kehu11=#{kehu11}, kehu12=#{kehu12}, kehu21=#{kehu21}, kehu22=#{kehu22}, xitong=#{xitong}, xitong11=#{xitong11}, xitong12=#{xitong12}, xitong21=#{xitong21}, xitong22=#{xitong22} where role=#{role};
+    </select>
+
+    <select id="AddUser" resultType="com.backend.entity.Permission">
+        insert into permission values(0, "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", #{newrole});
+    </select>
+
+    <select id="GetAllroles" resultType="com.backend.entity.Permission">
+        select * from permission;
+    </select>
+
+    <select id="DeleteArole" resultType="com.backend.entity.Permission">
+        delete from permission where role=#{role};
+    </select>
+
+    <select id="SetNewRole" resultType="com.backend.entity.Permission">
+        update permission set role=#{roleafter} where role=#{rolepre};
+    </select>
+
+    <select id="SetNewUser" resultType="com.backend.entity.Users">
+        update userInfo set role = #{roleafter} where role = #{rolepre};
+    </select>
+
+</mapper>
